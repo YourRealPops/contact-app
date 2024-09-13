@@ -1,0 +1,14 @@
+.contact-btn{
+    padding: 10px 30px;
+    font-size: 3rem;
+    font-weight: 700;
+    background-color: #4355fa;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+
+    &:hover{
+        color: #fff;
+    }
+}
