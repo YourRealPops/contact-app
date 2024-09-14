@@ -22,6 +22,9 @@
     left: -250px;
     top: 0;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 80px;
     background: #4355fa;
     transition: left 0.3s ease;
@@ -29,18 +32,24 @@
   
     &.active {
       left: 0;
-      background: #4355fa;
+      border-left: 2px solid #fff;
+      // background: #4355fa;
     }
   
     ul {
       list-style-type: none;
+
       padding: 0;
       margin-top: 60px;
+      
     }
   
     li {
       padding: 15px 20px;
-      border-bottom: 1px solid #444;
+      height: calc(100vh - 500px);
+
+      // border-bottom: 1px solid #444;
+      
     }
   
     a {

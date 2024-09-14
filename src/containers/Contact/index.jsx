@@ -17,9 +17,12 @@ const Contact = () => {
   const [checkedContacts, setCheckedContacts] = useState([]);
 
   const addContact = () => {
-    if (newContact.fullName && newContact.email && newContact.phoneNumber) {
-      setContacts([...contacts, { ...newContact, id: Date.now() }]);
-      setNewContact({ fullName: "", email: "", phoneNumber: "" });
+    console.log("addContact function called", newContact);
+    if (newContact.firstName && newContact.lastName && newContact.email && newContact.phoneNumber) {
+      const updatedContacts = [...contacts, { ...newContact, id: Date.now() }];
+      console.log("Updated contacts:", updatedContacts);
+      setContacts(updatedContacts);
+      setNewContact({ firstName: '', lastName: '', email: '', phoneNumber: '' });
       setShowAddModal(false);
     }
   };
@@ -57,16 +60,19 @@ const Contact = () => {
         </div>
         <div className="contact__addContact">
           <input type="text" />
-          <button className="add-btn" onClick={() => setShowAddModal(true)}>
+          <button 
+        className={`add-btn ${checkedContacts.length > 0 ? 'blurred' : ''}`} 
+        onClick={() => setShowAddModal(true)}
+        disabled={checkedContacts.length > 0}
+      >
         <UserPlus size={16} /> ADD CONTACT
       </button>
-      </div>
-
-          {checkedContacts.length > 0 && (
+      {checkedContacts.length > 0 && (
             <button className="delete-all-btn" onClick={deleteCheckedContacts}>
               <Trash2 size={16} /> DELETE ALL
             </button>
           )}
+      </div>
 
           <table className="contacts-table">
             <thead>
