@@ -11,9 +11,6 @@
     cursor: pointer;
     transition: all 0.3s ease;
   
-    &:hover {
-    //   background: #4355fa;
-    }
 }
 
 
@@ -32,7 +29,7 @@
   
     &.active {
       left: 0;
-      border-left: 2px solid #fff;
+      // border-left: 2px solid #fff;
       // background: #4355fa;
     }
   
@@ -60,7 +57,38 @@
       transition: color 0.3s ease;
   
       &:hover {
-        color: #ddd;
+        // border-left: 2px solid #fff;
+      }
+    }
+
+    &__menu__item{
+      position: relative;
+
+      &.active{
+        
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 30px;
+                transform: translateY(-50%);
+                height: 40px; // Match this to your icon size
+                width: 4px;
+                background-color: white;
+            }
+
+            
+
+            .navbar__menu__item__links {
+                color: white;
+            }
+      }
+      &__links {
+        // Existing styles...
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
       }
     }
   }

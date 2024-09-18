@@ -3,7 +3,7 @@ import { FaBars, FaHome, FaEnvelope } from "react-icons/fa";
 import { RiContactsBook3Fill } from "react-icons/ri";
 import { IoSettingsSharp } from "react-icons/io5";
 import {HiX} from "react-icons/hi"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import './styles.scss'
 
 const data = [
@@ -27,7 +27,8 @@ const data = [
 
 const NavBar = () => {
     const [toggleIcon, setToggleIcon] = useState(false)
-
+ 
+    const location = useLocation();
 
     const handleToggleIcon = ()=>{
         setToggleIcon(!toggleIcon)
@@ -44,11 +45,11 @@ const NavBar = () => {
 
         <ul>
         {data.map((item, key) => (
-            <li key={key} className="navbar__menu__item">
-              <Link className="navbar__menu__item__links" to={item.to}>
+            <li key={key} className={`navbar__menu__item ${location.pathname === item.to ? "active" : ""}`}>
+            <Link className="navbar__menu__item__links" to={item.to}>
                 {item.label}
-              </Link>
-            </li>
+            </Link>
+        </li>
           ))}
         </ul>
        
