@@ -111,79 +111,88 @@ const Contact = () => {
           </table>
 
           {showAddModal && (
-            <div className="modal-overlay">
-              <div className="modal-content">
-                <h2>ADD CONTACT</h2>
-                <button
-                  className="close-btn"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  <X size={24} />
-                </button>
-                <div className="input-group">
-                  <label>First name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter Your First Name"
-                    value={newContact.firstName}
-                    onChange={(e) =>
-                      setNewContact({
-                        ...newContact,
-                        firstName: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Last name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter Your Last Name"
-                    value={newContact.lastName}
-                    onChange={(e) =>
-                      setNewContact({ ...newContact, lastName: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="Input Your Email"
-                    value={newContact.email}
-                    onChange={(e) =>
-                      setNewContact({ ...newContact, email: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Phone number</label>
-                  <input
-                    type="tel"
-                    placeholder="Input Your Phone Numb"
-                    value={newContact.phoneNumber}
-                    onChange={(e) =>
-                      setNewContact({
-                        ...newContact,
-                        phoneNumber: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="button-group">
-                  <button
-                    className="cancel-btn"
-                    onClick={() => setShowAddModal(false)}
-                  >
-                    CANCEL
-                  </button>
-                  <button className="add-contact-btn" onClick={addContact}>
-                    ADD CONTACT
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+  <div className="modal-overlay">
+    <div className="modal">
+      <div className="modal__header">
+        <h2>ADD CONTACT</h2>
+        <button
+          className="close-btn"
+          onClick={() => setShowAddModal(false)}
+        >
+          <X size={24} />
+        </button>
+      </div>
+      <form className="modal__form" onSubmit={(e) => { e.preventDefault(); addContact(); }}>
+        <div>
+          <label htmlFor="firstName">First name</label>
+          <input
+            type="text"
+            id="firstName"
+            placeholder="Enter Your First Name"
+            value={newContact.firstName}
+            onChange={(e) =>
+              setNewContact({
+                ...newContact,
+                firstName: e.target.value,
+              })
+            }
+          />
+        </div>
+        <div>
+          <label htmlFor="lastName">Last name</label>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Enter Your Last Name"
+            value={newContact.lastName}
+            onChange={(e) =>
+              setNewContact({ ...newContact, lastName: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Input Your Email"
+            value={newContact.email}
+            onChange={(e) =>
+              setNewContact({ ...newContact, email: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Phone number</label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Input Your Phone Numb"
+            value={newContact.phoneNumber}
+            onChange={(e) =>
+              setNewContact({
+                ...newContact,
+                phoneNumber: e.target.value,
+              })
+            }
+          />
+        </div>
+        <div className="modal__actions">
+          <button
+            type="button"
+            className="modal__button modal__button--cancel"
+            onClick={() => setShowAddModal(false)}
+          >
+            CANCEL
+          </button>
+          <button type="submit" className="modal__button modal__button--submit">
+            ADD CONTACT
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
         </div>
       
     </>

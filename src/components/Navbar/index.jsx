@@ -26,22 +26,23 @@ const data = [
 ];
 
 const NavBar = () => {
-    const [toggleIcon, setToggleIcon] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
  
     const location = useLocation();
 
     const handleToggleIcon = ()=>{
-        setToggleIcon(!toggleIcon)
+        setIsOpen(!isOpen);
+        document.body.style.marginLeft = isOpen ? '0' : '30px';
     }
 
   return (
     <div>
-       <button className={`nav-icon ${toggleIcon ? "active" : ""}`} onClick={handleToggleIcon}>
+       <button className={`nav-icon ${isOpen ? "active" : ""}`} onClick={handleToggleIcon}>
             {
-                toggleIcon ? <HiX color="#fff" size={30} /> : <FaBars color="#000" size={25}/>
+                isOpen ? <HiX color="#fff" size={30} /> : <FaBars color="#000" size={25}/>
             }
         </button>
-      <nav  className={`navbar ${toggleIcon ? "active" : ""}`}>
+      <nav  className={`navbar ${isOpen ? "active" : ""}`}>
 
         <ul>
         {data.map((item, key) => (

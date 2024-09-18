@@ -1,15 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
 .nav-icon{
     position: fixed;
-    // top: 20px;
     left: 10px;
     z-index: 1000;
-    // background: #fff;
-    // color: #ffffff;
     border: none;
+    background: none;
     padding: 10px;
-    // font-size: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: left 0.3s ease-in-out;
   
 }
 
@@ -24,13 +27,11 @@
     justify-content: space-around;
     width: 80px;
     background: #4355fa;
-    transition: left 0.3s ease;
+    transition: left 0.3s ease-in-out;
     z-index: 999;
   
     &.active {
       left: 0;
-      // border-left: 2px solid #fff;
-      // background: #4355fa;
     }
   
     ul {
