@@ -69,3 +69,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 "This is a contact management system app that adds and deletes contacts" 
+
+
+its all wrong...when the contact is clicked, it should show the contact iinformation in a modal at first and an option to edit or cancel as in the first picture...then when the person clicks on edit, the edit modal should pop up as in the second image

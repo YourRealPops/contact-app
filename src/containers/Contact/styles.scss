@@ -205,4 +205,119 @@
       border-top-right-radius: 8px;
     }
   }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .view-modal{
+    position: relative;
+    top: 150px;
+    left: 350px;
+    width: 600px;
+    padding: 70px 40px 20px 40px;
+
+    
+  }
+
+  .view-modal, .edit-modal {
+    background-color: white;
+    border-radius: 8px;
+    // padding: 20px;
+    // width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+  
+      label {
+        font-weight: bold;
+        font-size: 2rem;
+        color: #333;
+      }
+  
+      span, input {
+        color: #666;
+        font-size: 1.7rem;
+      }
+  
+      input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f5f5f5;
+      }
+    }
+  
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+  
+    &__button {
+      padding: 20px 30px;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &--primary {
+        background-color: #2948ff;
+        color: white;
+        border: none;
+  
+        &:hover {
+          background-color: darken(#2948ff, 10%);
+        }
+      }
+  
+      &--secondary {
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+  
+        &:hover {
+          background-color: darken(#e0e0e0, 10%);
+        }
+      }
+    }
+  }
+  
+  .edit-modal {
+    width: 900px;
+    padding: 20px;
+  
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+  
+    &__actions {
+      grid-column: 1 / -1;
+    }
+  }
 }
