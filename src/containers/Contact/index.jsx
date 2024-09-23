@@ -21,15 +21,14 @@ const Contact = () => {
   const [checkedContacts, setCheckedContacts] = useState([]);
 
   useEffect(() => {
-    const savedContacts = localStorage.getItem('contacts');
+    const savedContacts = localStorage.getItem("contacts");
     if (savedContacts) {
       setContacts(JSON.parse(savedContacts));
     }
   }, []);
 
-  
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
   const addContact = () => {
@@ -92,7 +91,7 @@ const Contact = () => {
   };
 
   const openEditModal = () => {
-    setEditingContact({...selectedContact});
+    setEditingContact({ ...selectedContact });
     setShowEditModal(true);
     setShowViewModal(false);
   };
@@ -105,17 +104,19 @@ const Contact = () => {
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditingContact(prev => ({ ...prev, [name]: value }));
+    setEditingContact((prev) => ({ ...prev, [name]: value }));
   };
 
   const saveEditedContact = () => {
-    setContacts(contacts.map(contact => 
-      contact.id === editingContact.id ? editingContact : contact
-    ));
-    setSelectedContact(null);  // Clear the selected contact
-    setEditingContact(null);   // Clear the editing contact
-    setShowEditModal(false);   // Close the edit modal
-    setShowViewModal(false);   //
+    setContacts(
+      contacts.map((contact) =>
+        contact.id === editingContact.id ? editingContact : contact
+      )
+    );
+    setSelectedContact(null);
+    setEditingContact(null);
+    setShowEditModal(false);
+    setShowViewModal(false);
   };
 
   return (
@@ -189,88 +190,8 @@ const Contact = () => {
             ))}
           </tbody>
         </table>
-
-         {showViewModal && selectedContact && (
-          <div className="modal-overlay">
-            <div className="view-modal">
-              <div className="view-modal__content">
-                <div className="view-modal__field">
-                  <label>FULL NAME:</label>
-                  <span>{`${selectedContact.firstName} ${selectedContact.lastName}`}</span>
-                </div>
-                <div className="view-modal__field">
-                  <label>PhoneNumber:</label>
-                  <span>{selectedContact.phoneNumber}</span>
-                </div>
-                <div className="view-modal__field">
-                  <label>EMAIL:</label>
-                  <span>{selectedContact.email}</span>
-                </div>
-                <div className="view-modal__actions">
-                  <button className="view-modal__button view-modal__button--primary" onClick={openEditModal}>EDIT CONTACT</button>
-                  <button className="view-modal__button view-modal__button--secondary" onClick={closeViewModal}>CANCEL</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Edit Contact Modal */}
-        {showEditModal && editingContact && (
-          <div className="modal-overlay">
-            <div className="edit-modal">
-              <h2>Edit CONTACT</h2>
-              <form onSubmit={(e) => { e.preventDefault(); saveEditedContact(); }}>
-                <div className="edit-modal__field">
-                  <label htmlFor="firstName">First name</label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={editingContact.firstName}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="edit-modal__field">
-                  <label htmlFor="lastName">Last name</label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={editingContact.lastName}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="edit-modal__field">
-                  <label htmlFor="email">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={editingContact.email}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="edit-modal__field">
-                  <label htmlFor="phoneNumber">Phone number</label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={editingContact.phoneNumber}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="edit-modal__actions">
-                  <button type="button" className="edit-modal__button edit-modal__button--secondary" onClick={closeEditModal}>CANCEL</button>
-                  <button type="submit" className="edit-modal__button edit-modal__button--primary">SAVE</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {showAddModal && (
+{/* Add Contact Modal */}
+{showAddModal && (
           <div className="modal-overlay">
             <div className="modal">
               <div className="modal__header">
@@ -362,6 +283,117 @@ const Contact = () => {
             </div>
           </div>
         )}
+
+        
+        {/* View Contact Modal */}
+        {showViewModal && selectedContact && (
+          <div className="modal-overlay">
+            <div className="view-modal">
+              <div className="view-modal__content">
+                <div className="view-modal__field">
+                  <label>FULL NAME:</label>
+                  <span>{`${selectedContact.firstName} ${selectedContact.lastName}`}</span>
+                </div>
+                <div className="view-modal__field">
+                  <label>PhoneNumber:</label>
+                  <span>{selectedContact.phoneNumber}</span>
+                </div>
+                <div className="view-modal__field">
+                  <label>EMAIL:</label>
+                  <span>{selectedContact.email}</span>
+                </div>
+                <div className="view-modal__actions">
+                  <button
+                    className="view-modal__button view-modal__button--primary"
+                    onClick={openEditModal}
+                  >
+                    EDIT CONTACT
+                  </button>
+                  <button
+                    className="view-modal__button view-modal__button--secondary"
+                    onClick={closeViewModal}
+                  >
+                    CANCEL
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Contact Modal */}
+        {showEditModal && editingContact && (
+          <div className="modal-overlay">
+            <div className="edit-modal">
+              <h2>Edit CONTACT</h2>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  saveEditedContact();
+                }}
+              >
+                <div className="edit-modal__field">
+                  <label htmlFor="firstName">First name</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={editingContact.firstName}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="edit-modal__field">
+                  <label htmlFor="lastName">Last name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={editingContact.lastName}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="edit-modal__field">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={editingContact.email}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="edit-modal__field">
+                  <label htmlFor="phoneNumber">Phone number</label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={editingContact.phoneNumber}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                <div className="edit-modal__actions">
+                  <button
+                    type="button"
+                    className="edit-modal__button edit-modal__button--secondary"
+                    onClick={closeEditModal}
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    type="submit"
+                    className="edit-modal__button edit-modal__button--primary"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        
+
+        
       </div>
     </>
   );
