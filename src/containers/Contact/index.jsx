@@ -3,10 +3,11 @@ import "./styles.scss";
 import Header from "../../components/Header";
 // import AddContactButton from "../AddContactButton";
 import { RiContactsBook3Fill } from "react-icons/ri";
-import { Trash2, UserPlus, X } from "lucide-react";
+import { Trash2, UserPlus, X, Search } from "lucide-react";
 
 const Contact = () => {
   const [contacts, setContacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -52,12 +53,14 @@ const Contact = () => {
     }
   };
 
-  const deleteContact = (id) => {
+  const deleteContact = (e, id) => {
+    e.stopPropagation();
     setContacts(contacts.filter((contact) => contact.id !== id));
     setCheckedContacts(checkedContacts.filter((contactId) => contactId !== id));
   };
 
-  const toggleCheck = (id) => {
+  const toggleCheck = (e, id) => {
+    e.stopPropagation();
     setCheckedContacts((prevChecked) =>
       prevChecked.includes(id)
         ? prevChecked.filter((contactId) => contactId !== id)
@@ -119,6 +122,46 @@ const Contact = () => {
     setShowViewModal(false);
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return <span>{text}</span>;
+    }
+    const regex = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.filter(String).map((part, i) => {
+          return regex.test(part) ? (
+            <mark key={i}>{part}</mark>
+          ) : (
+            <span key={i}>{part}</span>
+          );
+        })}
+      </span>
+    );
+  };
+
+  const sortedAndFilteredContacts = contacts
+    .filter(contact => {
+      const fullName = `${contact.firstName} ${contact.lastName}`.toLowerCase();
+      const searchLower = searchTerm.toLowerCase();
+      return fullName.includes(searchLower) ||
+             contact.email.toLowerCase().includes(searchLower) ||
+             contact.phoneNumber.includes(searchTerm);
+    })
+    .sort((a, b) => {
+      const aFullName = `${a.firstName} ${a.lastName}`.toLowerCase();
+      const bFullName = `${b.firstName} ${b.lastName}`.toLowerCase();
+      const searchLower = searchTerm.toLowerCase();
+      const aIncludes = aFullName.includes(searchLower);
+      const bIncludes = bFullName.includes(searchLower);
+      return bIncludes - aIncludes;
+    });
+
   return (
     <>
       <Header />
@@ -131,7 +174,15 @@ const Contact = () => {
           </div>
         </div>
         <div className="contact__addContact">
-          <input type="text" />
+        <div className="search-bar">
+            <Search size={20} />
+            <input
+              type="text"
+              placeholder="Search contacts..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </div>
           <button
             className={`add-btn ${checkedContacts.length > 0 ? "blurred" : ""}`}
             onClick={() => setShowAddModal(true)}
@@ -166,22 +217,30 @@ const Contact = () => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {sortedAndFilteredContacts.map((contact) => (
               <tr key={contact.id} onClick={() => openViewModal(contact)}>
-                <td>
+                <td onClick={(e) => e.stopPropagation()}>
                   <input
                     type="checkbox"
                     checked={checkedContacts.includes(contact.id)}
-                    onChange={() => toggleCheck(contact.id)}
+                    onChange={(e) => toggleCheck(e, contact.id)}
                   />
                 </td>
-                <td>{`${contact.firstName} ${contact.lastName}`}</td>
-                <td>{contact.email}</td>
-                <td>{contact.phoneNumber}</td>
-                <td>
+                <td>{highlightText(`${contact.firstName} ${contact.lastName}`, searchTerm)}</td>
+                <td>{highlightText(contact.email, searchTerm)}</td>
+                <td>{highlightText(contact.phoneNumber, searchTerm)}</td>
+                <td onClick={(e) => e.stopPropagation()}>
                   <button
-                    className="delete-btn"
-                    onClick={() => deleteContact(contact.id)}
+                    className={`delete-btn ${
+                      checkedContacts.includes(contact.id)
+                        ? "active"
+                        : "inactive"
+                    }`}
+                    onClick={(e) =>
+                      checkedContacts.includes(contact.id) &&
+                      deleteContact(e, contact.id)
+                    }
+                    disabled={!checkedContacts.includes(contact.id)}
                   >
                     <Trash2 size={16} />
                   </button>
@@ -190,8 +249,8 @@ const Contact = () => {
             ))}
           </tbody>
         </table>
-{/* Add Contact Modal */}
-{showAddModal && (
+        {/* Add Contact Modal */}
+        {showAddModal && (
           <div className="modal-overlay">
             <div className="modal">
               <div className="modal__header">
@@ -216,6 +275,7 @@ const Contact = () => {
                     type="text"
                     id="firstName"
                     placeholder="Enter Your First Name"
+                    required
                     value={newContact.firstName}
                     onChange={(e) =>
                       setNewContact({
@@ -231,6 +291,7 @@ const Contact = () => {
                     type="text"
                     id="lastName"
                     placeholder="Enter Your Last Name"
+                    required
                     value={newContact.lastName}
                     onChange={(e) =>
                       setNewContact({ ...newContact, lastName: e.target.value })
@@ -243,6 +304,7 @@ const Contact = () => {
                     type="email"
                     id="email"
                     placeholder="Input Your Email"
+                    required
                     value={newContact.email}
                     onChange={(e) =>
                       setNewContact({ ...newContact, email: e.target.value })
@@ -254,7 +316,8 @@ const Contact = () => {
                   <input
                     type="tel"
                     id="phone"
-                    placeholder="Input Your Phone Numb"
+                    placeholder="Input Your Phone Number"
+                    required
                     value={newContact.phoneNumber}
                     onChange={(e) =>
                       setNewContact({
@@ -284,7 +347,6 @@ const Contact = () => {
           </div>
         )}
 
-        
         {/* View Contact Modal */}
         {showViewModal && selectedContact && (
           <div className="modal-overlay">
@@ -391,9 +453,6 @@ const Contact = () => {
             </div>
           </div>
         )}
-        
-
-        
       </div>
     </>
   );
